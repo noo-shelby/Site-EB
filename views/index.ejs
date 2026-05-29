@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>Portal de Notícias - EB</title>
+    <title>CComEX | Notícias</title>
 </head>
 <body>
     <nav class="navbar">
-        <strong>Portal CComEX</strong>
+        <strong>EXÉRCITO BRASILEIRO</strong>
         <div>
-            <a href="/">Home</a>
+            <a href="/">Início</a>
             <% if (user) { %>
-                <% if (user.cargo === 'Administrador' || user.cargo === 'Moderador') { %> <a href="/admin">Painel ADM</a> <% } %>
-                <span>Olá, <%= user.login %></span>
-                <a href="/logout">Sair</a>
+                <a href="/logout">Sair (<%= user.login %>)</a>
             <% } else { %>
                 <a href="/login">Entrar</a>
                 <a href="/cadastro">Cadastrar</a>
             <% } %>
         </div>
     </nav>
-
     <div class="container">
-        <h1>Últimas Notícias</h1>
-        <% noticias.forEach(noticia => { %>
+        <h1>Informativos Oficiais</h1>
+        <% noticias.forEach(n => { %>
             <div class="card-noticia">
-                <h2><%= noticia.titulo %></h2>
-                <p><em><%= noticia.subtitulo %></em></p>
-                <div class="assinatura">Posto/Nome: <%= noticia.autor %> | Data: <%= noticia.data %></div>
-                <a href="/materia/<%= noticia.id %>" style="display:inline-block; margin-top:15px; color: #3d4a35; font-weight:bold;">Ler mais...</a>
+                <h2><%= n.titulo %></h2>
+                <p><%= n.subtitulo %></p>
+                <div class="assinatura">Autor: <%= n.autor %> | CComEX</div>
             </div>
         <% }) %>
     </div>
