@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <title>Cadastro | CComEX</title>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2 style="text-align:center;">Cadastro</h2>
+            <form action="/cadastro" method="POST">
+                <div id="p1">
+                    <input type="text" name="discord_user" placeholder="Usuário Discord" required>
+                    <select name="setor" required>
+                        <option value="Membro">Membro</option>
+                        <option value="Militar">Militar</option>
+                        <option value="CComEX">CComEX</option>
+                    </select>
+                    <button type="button" onclick="document.getElementById('p1').style.display='none';document.getElementById('p2').style.display='block';">Próximo Passo</button>
+                </div>
+                <div id="p2" style="display:none;">
+                    <input type="text" name="login" placeholder="Login de Acesso" required>
+                    <input type="password" name="senha" placeholder="Senha" required>
+                    <button type="submit">Finalizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
