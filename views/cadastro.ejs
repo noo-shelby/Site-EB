@@ -2,28 +2,24 @@
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>Cadastro | CComEX</title>
+    <title>Alistamento | CComEX</title>
 </head>
 <body>
+    <nav class="navbar">
+        <a href="/">← Início</a>
+        <strong>RECRUTAMENTO MILITAR</strong>
+    </nav>
     <div class="container">
-        <div class="form-box">
-            <h2 style="text-align:center;">Cadastro</h2>
+        <div class="card-noticia" style="max-width: 450px; margin: 40px auto; border-left: none; border-top: 6px solid var(--verde-eb);">
+            <h2 style="text-align: center;">Criar Conta</h2>
             <form action="/cadastro" method="POST">
-                <div id="p1">
-                    <input type="text" name="discord_user" placeholder="Usuário Discord" required>
-                    <select name="setor" required>
-                        <option value="Membro">Membro</option>
-                        <option value="Militar">Militar</option>
-                        <option value="CComEX">CComEX</option>
-                    </select>
-                    <button type="button" onclick="document.getElementById('p1').style.display='none';document.getElementById('p2').style.display='block';">Próximo Passo</button>
-                </div>
-                <div id="p2" style="display:none;">
-                    <input type="text" name="login" placeholder="Login de Acesso" required>
-                    <input type="password" name="senha" placeholder="Senha" required>
-                    <button type="submit">Finalizar</button>
-                </div>
+                <input type="text" name="discord_user" placeholder="Discord (ex: Shelby#0000)" required>
+                <input type="text" name="setor" placeholder="Seu Setor / Organização" required>
+                <input type="text" name="login" placeholder="Nome de Usuário para Login" required>
+                <input type="password" name="senha" placeholder="Senha de Acesso" required>
+                <button type="submit">FINALIZAR ALISTAMENTO</button>
             </form>
+            <p style="text-align:center; font-size:0.8rem;">Já é membro? <a href="/login" style="color:var(--verde-claro);">Entrar</a></p>
         </div>
     </div>
 </body>
