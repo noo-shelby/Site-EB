@@ -1,25 +1,30 @@
 :root {
-    --eb-verde: #2e3b23;
-    --eb-oliva: #4b5d3b;
-    --shelby-gold: #f1c40f;
+    --verde-eb: #2e3b23;
+    --verde-claro: #4b5d3b;
+    --gold: #f1c40f;
     --danger: #c0392b;
+    --bg: #f0f2f5;
 }
 
-body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; margin: 0; color: #333; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; color: #333; }
 
-.navbar { background: var(--eb-verde); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.navbar { background: var(--verde-eb); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 .navbar a { color: white; text-decoration: none; font-weight: bold; margin-left: 20px; transition: 0.3s; }
-.navbar a:hover { color: var(--shelby-gold); }
+.navbar a:hover { color: var(--gold); }
 
-.container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+.container { max-width: 850px; margin: 30px auto; padding: 0 20px; }
 
 .card-noticia { 
-    background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; 
-    border-left: 6px solid var(--eb-verde); box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    background: white; border-radius: 8px; padding: 25px; margin-bottom: 25px; 
+    border-left: 6px solid var(--verde-eb); box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-.btn-deus { background: var(--danger); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-.btn-deus:hover { background: #000; color: #ff0000; }
+.card-noticia h2 { margin-top: 0; color: var(--verde-eb); }
+
+button { cursor: pointer; border: none; border-radius: 4px; font-weight: bold; transition: 0.3s; }
+.btn-apagar { background: var(--danger); color: white; padding: 8px 15px; margin-top: 10px; }
+.btn-apagar:hover { background: #000; color: red; }
 
 input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-button[type="submit"] { background: var(--eb-oliva); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+form button[type="submit"] { background: var(--verde-eb); color: white; padding: 12px; width: 100%; }
+form button[type="submit"]:hover { background: var(--verde-claro); }
