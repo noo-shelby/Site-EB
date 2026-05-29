@@ -6,13 +6,13 @@
 </head>
 <body>
     <nav class="navbar">
-        <strong style="font-size: 1.5rem;">CComEX</strong>
+        <strong style="font-size: 1.4rem;">CComEX</strong>
         <div>
-            <a href="/">Home</a>
+            <a href="/">Notícias</a>
             <% if (user) { %>
                 <% if (user.cargo === 'Criador' || user.cargo === 'Administrador') { %>
-                    <a href="/admin" style="color: var(--shelby-gold);">ADMIN</a>
-                    <a href="/publicar" style="color: var(--shelby-gold);">POSTAR</a>
+                    <a href="/admin" style="color: var(--gold);">ADMIN</a>
+                    <a href="/publicar" style="color: var(--gold);">POSTAR</a>
                 <% } %>
                 <a href="/logout">Sair</a>
             <% } else { %>
@@ -22,15 +22,17 @@
     </nav>
 
     <div class="container">
+        <h1 style="color: var(--verde-eb);">Boletim de Notícias</h1>
         <% noticias.forEach(n => { %>
             <div class="card-noticia">
-                <h2 style="margin:0;"><%= n.titulo %></h2>
-                <p style="color: #666;"><%= n.subtitulo %></p>
-                <a href="/materia/<%= n.id %>" style="color: var(--eb-oliva); font-weight: bold;">Ler mais...</a>
-                
+                <h2><%= n.titulo %></h2>
+                <p style="color: #555;"><%= n.subtitulo %></p>
+                <p style="font-size: 0.8rem; color: gray;">Autor: <%= n.autor %> | <%= n.data %></p>
+                <a href="/materia/<%= n.id %>" style="color: var(--verde-claro); font-weight: bold;">Lendo Matéria...</a>
+
                 <% if (user && (user.cargo === 'Criador' || user.cargo === 'CComEX')) { %>
                     <form action="/admin/excluir-noticia/<%= n.id %>" method="POST">
-                        <button type="submit" class="btn-deus">🗑️ APAGAR MATÉRIA</button>
+                        <button type="submit" class="btn-apagar">🗑️ EXCLUIR MATÉRIA</button>
                     </form>
                 <% } %>
             </div>
