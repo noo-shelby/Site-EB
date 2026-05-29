@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>Painel Administrativo</title>
+    <title>Admin | CComEX</title>
 </head>
 <body>
     <div class="container">
-        <h2>Área de Logs e Gestão de Usuários</h2>
-        <table>
-            <thead>
+        <h1>Gestão de Membros</h1>
+        <table border="1" width="100%" style="background:white; text-align:center;">
+            <tr>
+                <th>Login</th><th>Setor</th><th>Cargo</th><th>ADVs</th><th>Ações</th>
+            </tr>
+            <% logs.forEach(l => { %>
                 <tr>
-                    <th>Usuário Discord</th>
-                    <th>Setor</th>
-                    <th>Cargo Portal</th>
-                    <th>ADVs</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% logs.forEach(l => { %>
-                <tr>
-                    <td><%= l.discord_user %></td>
+                    <td><%= l.login %></td>
                     <td><%= l.setor %></td>
-                    <td><strong><%= l.cargo %></strong></td>
-                    <td><%= l.advs %></td>
                     <td>
-                        <form action="/admin/adv/<%= l.id %>" method="POST" style="display:inline;">
-                            <button type="submit" style="padding:5px 10px; background: #c0392b; width: auto; font-size: 0.7rem;">+1 ADV</button>
+                        <form action="/admin/alterar-cargo/<%= l.id %>" method="POST">
+                            <select name="novo_cargo" onchange="this.form.submit()">
+                                <option value="Membro" <%= l.cargo==='Membro'?'selected':'' %>>Membro</option>
+                                <option value="Jornalista" <%= l.cargo==='Jornalista'?'selected':'' %>>Jornalista</option>
+                                <option value="Moderador" <%= l.cargo==='Moderador'?'selected':'' %>>Moderador</option>
+                                <option value="Administrador" <%= l.cargo==='Administrador'?'selected':'' %>>Administrador</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td><%= l.advs %>/3</td>
+                    <td>
+                        <form action="/admin/adv/<%= l.id %>" method="POST">
+                            <button type="submit" style="background:orange;">+1 ADV</button>
                         </form>
                     </td>
                 </tr>
-                <% }) %>
-            </tbody>
+            <% }) %>
         </table>
+        <br><a href="/">Voltar</a>
     </div>
 </body>
 </html>
