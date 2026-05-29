@@ -2,17 +2,17 @@
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>CComEX | Home</title>
+    <title>Portal CComEX</title>
 </head>
 <body>
     <nav class="navbar">
-        <strong>EB - PORTAL</strong>
+        <strong style="font-size: 1.5rem;">CComEX</strong>
         <div>
             <a href="/">Home</a>
             <% if (user) { %>
                 <% if (user.cargo === 'Criador' || user.cargo === 'Administrador') { %>
-                    <a href="/admin" style="color: gold;">PAINEL ADMIN</a>
-                    <a href="/publicar" style="color: gold;">POSTAR</a>
+                    <a href="/admin" style="color: var(--shelby-gold);">ADMIN</a>
+                    <a href="/publicar" style="color: var(--shelby-gold);">POSTAR</a>
                 <% } %>
                 <a href="/logout">Sair</a>
             <% } else { %>
@@ -22,17 +22,15 @@
     </nav>
 
     <div class="container">
-        <h1>Últimas Notícias</h1>
         <% noticias.forEach(n => { %>
             <div class="card-noticia">
-                <h2><%= n.titulo %></h2>
-                <p><%= n.subtitulo %></p>
-                <p><small>Por: <%= n.autor %></small></p>
-                <a href="/materia/<%= n.id %>">Ler Tudo</a>
-
+                <h2 style="margin:0;"><%= n.titulo %></h2>
+                <p style="color: #666;"><%= n.subtitulo %></p>
+                <a href="/materia/<%= n.id %>" style="color: var(--eb-oliva); font-weight: bold;">Ler mais...</a>
+                
                 <% if (user && (user.cargo === 'Criador' || user.cargo === 'CComEX')) { %>
-                    <form action="/admin/excluir-noticia/<%= n.id %>" method="POST" style="margin-top:10px;">
-                        <button type="submit" style="background:red; color:white; border:none; cursor:pointer; padding:5px;">🗑️ APAGAR MATÉRIA</button>
+                    <form action="/admin/excluir-noticia/<%= n.id %>" method="POST">
+                        <button type="submit" class="btn-deus">🗑️ APAGAR MATÉRIA</button>
                     </form>
                 <% } %>
             </div>
