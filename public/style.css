@@ -1,23 +1,125 @@
 :root {
-    --primary: #2e3b23;
-    --dark: #1a1c1e;
-    --gray-bg: #f8f9fa;
-    --white: #ffffff;
+    --primaria: #2e3b23; /* Verde Oliva Escuro */
+    --secundaria: #4b5d3b; /* Verde Militar */
+    --destaque: #f1c40f; /* Dourado (Poder) */
+    --perigo: #c0392b; /* Vermelho Alerta */
+    --fundo: #eef2f3;
+    --texto: #2c3e50;
 }
 
-body { font-family: 'Segoe UI', sans-serif; background: var(--gray-bg); color: #333; margin: 0; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--fundo);
+    color: var(--texto);
+    margin: 0;
+}
 
-.navbar { background: var(--dark); padding: 15px 5%; display: flex; justify-content: space-between; color: white; }
-.navbar a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
+/* NAVBAR SUPREMA */
+.navbar {
+    background: var(--primaria);
+    color: white;
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
 
-.container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 20px;
+    transition: 0.3s;
+}
 
-.form-box { background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 400px; margin: auto; }
+.navbar a:hover {
+    color: var(--destaque);
+}
 
-input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+/* CONTAINER */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
 
-button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+/* CARDS DE NOTÍCIA */
+.card-noticia {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-left: 8px solid var(--primaria);
+    transition: transform 0.2s;
+}
 
-.card-noticia { background: var(--white); padding: 30px; border-radius: 12px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border-left: 6px solid var(--primary); }
+.card-noticia:hover {
+    transform: translateY(-5px);
+}
 
-.assinatura { border-top: 1px solid #eee; margin-top: 20px; padding-top: 10px; font-size: 0.75rem; color: var(--primary); font-weight: bold; text-transform: uppercase; }
+.card-noticia h2 {
+    margin-top: 0;
+    color: var(--primaria);
+}
+
+/* BOTÕES */
+button, .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-apagar {
+    background: var(--perigo);
+    color: white;
+}
+
+.btn-apagar:hover {
+    background: #a93226;
+    box-shadow: 0 0 10px rgba(192, 57, 43, 0.5);
+}
+
+/* PAINEL DO CRIADOR (Dourado) */
+.painel-deus {
+    background: #fff9e6;
+    border: 2px solid var(--destaque);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* TABELAS ADMIN */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+}
+
+th {
+    background: var(--primaria);
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+/* INPUTS */
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
