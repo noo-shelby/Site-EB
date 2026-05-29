@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <title>Painel Administrativo</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Área de Logs e Gestão de Usuários</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuário Discord</th>
+                    <th>Setor</th>
+                    <th>Cargo Portal</th>
+                    <th>ADVs</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% logs.forEach(l => { %>
+                <tr>
+                    <td><%= l.discord_user %></td>
+                    <td><%= l.setor %></td>
+                    <td><strong><%= l.cargo %></strong></td>
+                    <td><%= l.advs %></td>
+                    <td>
+                        <form action="/admin/adv/<%= l.id %>" method="POST" style="display:inline;">
+                            <button type="submit" style="padding:5px 10px; background: #c0392b; width: auto; font-size: 0.7rem;">+1 ADV</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
