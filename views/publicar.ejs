@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/style.css">
+    <title>Publicar Matéria | CComEX</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">← Voltar ao Início</a>
+        <strong>Painel do Jornalista</strong>
+    </nav>
+
+    <div class="container">
+        <div class="form-box" style="max-width: 800px;">
+            <h2>Nova Publicação Oficial</h2>
+            <form action="/publicar" method="POST">
+                <label>Título da Notícia</label>
+                <input type="text" name="titulo" placeholder="Ex: Exercício de Campo em curso..." required>
+                
+                <label>Subtítulo</label>
+                <input type="text" name="subtitulo" placeholder="Breve resumo da notícia" required>
+                
+                <label>Conteúdo da Matéria (Suporta HTML simples)</label>
+                <textarea name="conteudo" rows="10" style="width:100%; border-radius:6px; border:1px solid #ddd; padding:10px;" required></textarea>
+                
+                <p style="font-size:0.8rem; color:gray; margin-top:10px;">
+                    * A assinatura será automática como: <strong><%= user.login %></strong>
+                </p>
+                
+                <button type="submit" style="margin-top:20px;">PUBLICAR MATÉRIA</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
