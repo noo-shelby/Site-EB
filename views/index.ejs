@@ -2,28 +2,39 @@
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>CComEX | Notícias</title>
+    <title>CComEX | Home</title>
 </head>
 <body>
     <nav class="navbar">
-        <strong>EXÉRCITO BRASILEIRO</strong>
+        <strong>EB - PORTAL</strong>
         <div>
-            <a href="/">Início</a>
+            <a href="/">Home</a>
             <% if (user) { %>
-                <a href="/logout">Sair (<%= user.login %>)</a>
+                <% if (user.cargo === 'Criador' || user.cargo === 'Administrador') { %>
+                    <a href="/admin" style="color: gold;">PAINEL ADMIN</a>
+                    <a href="/publicar" style="color: gold;">POSTAR</a>
+                <% } %>
+                <a href="/logout">Sair</a>
             <% } else { %>
                 <a href="/login">Entrar</a>
-                <a href="/cadastro">Cadastrar</a>
             <% } %>
         </div>
     </nav>
+
     <div class="container">
-        <h1>Informativos Oficiais</h1>
+        <h1>Últimas Notícias</h1>
         <% noticias.forEach(n => { %>
             <div class="card-noticia">
                 <h2><%= n.titulo %></h2>
                 <p><%= n.subtitulo %></p>
-                <div class="assinatura">Autor: <%= n.autor %> | CComEX</div>
+                <p><small>Por: <%= n.autor %></small></p>
+                <a href="/materia/<%= n.id %>">Ler Tudo</a>
+
+                <% if (user && (user.cargo === 'Criador' || user.cargo === 'CComEX')) { %>
+                    <form action="/admin/excluir-noticia/<%= n.id %>" method="POST" style="margin-top:10px;">
+                        <button type="submit" style="background:red; color:white; border:none; cursor:pointer; padding:5px;">🗑️ APAGAR MATÉRIA</button>
+                    </form>
+                <% } %>
             </div>
         <% }) %>
     </div>
