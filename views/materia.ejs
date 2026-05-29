@@ -1,72 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title><%= noticia.titulo %> | CComEX</title>
+    <title><%= noticia.titulo %></title>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="/">← Voltar ao Início</a>
-        <strong>Portal de Jornalismo - EB</strong>
-    </nav>
-
     <div class="container">
-        <article class="card-noticia" style="border-left: none; border-bottom: 6px solid var(--primary);">
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px;"><%= noticia.titulo %></h1>
-            <h3 style="color: #666; font-weight: normal; margin-bottom: 30px;"><%= noticia.subtitulo %></h3>
-            
-            <div class="conteudo-materia" style="font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap;">
-                <%= noticia.conteudo %>
+        <h1><%= noticia.titulo %></h1>
+        <h3><%= noticia.subtitulo %></h3>
+        <hr>
+        <p><%= noticia.conteudo %></p>
+        <p><strong>Assinado por: <%= noticia.autor %></strong></p>
+        <hr>
+        <h3>Comentários</h3>
+        <% if (user) { %>
+            <form action="/comentar/<%= noticia.id %>" method="POST">
+                <textarea name="texto" required style="width:100%"></textarea><br>
+                <button type="submit">Enviar</button>
+            </form>
+        <% } %>
+        <% comentarios.forEach(c => { %>
+            <div style="border:1px solid #ccc; margin:10px; padding:10px;">
+                <strong><%= c.usuario_nome %>:</strong> <%= c.texto %>
             </div>
-
-            <div class="assinatura">
-                ✒️ PUBLICADO POR: <%= noticia.autor %> | DATA: <%= noticia.data %>
-                <br><strong>ASSINATURA OFICIAL CComEX - EXÉRCITO BRASILEIRO</strong>
-            </div>
-        </article>
-
-        <section class="comentarios" style="margin-top: 50px;">
-            <h3>Comentários dos Membros</h3>
-            
-            <% if (user) { %>
-                <form action="/comentar/<%= noticia.id %>" method="POST" style="margin-bottom: 30px;">
-                    <textarea name="texto" placeholder="Escreva seu comentário respeitosamente..." required 
-                        style="width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; resize: vertical;"></textarea>
-                    <button type="submit" style="width: auto; padding: 10px 25px; margin-top: 10px;">Enviar Comentário</button>
-                </form>
-            <% } else { %>
-                <p style="background: #eee; padding: 15px; border-radius: 8px; text-align: center;">
-                    Você precisa estar <a href="/login" style="color: var(--primary); font-weight: bold;">logado</a> para comentar.
-                </p>
-            <% } %>
-
-            <div class="lista-comentarios">
-                <% if (comentarios.length === 0) { %>
-                    <p style="color: gray;">Nenhum comentário ainda. Seja o primeiro!</p>
-                <% } %>
-
-                <% comentarios.forEach(c => { %>
-                    <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #eee; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                        <strong style="color: var(--primary);"><%= c.usuario_nome %></strong>
-                        <span style="font-size: 0.7rem; color: gray; margin-left: 10px;"><%= c.data %></span>
-                        <p style="margin: 10px 0 0 0; color: #444;"><%= c.texto %></p>
-                        
-                        <% if (user && ['Moderador', 'Administrador', 'Criador', 'CComEX'].includes(user.cargo)) { %>
-                            <div style="position: absolute; top: 15px; right: 15px; display: flex; gap: 5px;">
-                                <form action="/admin/adv-comentario/<%= c.id %>" method="POST">
-                                    <button type="submit" style="background: #e67e22; width: auto; padding: 4px 8px; font-size: 0.6rem;">+1 ADV</button>
-                                </form>
-                                <form action="/admin/apagar-comentario/<%= c.id %>" method="POST">
-                                    <button type="submit" style="background: #c0392b; width: auto; padding: 4px 8px; font-size: 0.6rem;">APAGAR</button>
-                                </form>
-                            </div>
-                        <% } %>
-                    </div>
-                <% }) %>
-            </div>
-        </section>
+        <% }) %>
+        <br><a href="/">Voltar</a>
     </div>
 </body>
 </html>
