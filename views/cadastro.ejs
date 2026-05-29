@@ -2,24 +2,19 @@
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>Alistamento | CComEX</title>
+    <title>Cadastro</title>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="/">← Início</a>
-        <strong>RECRUTAMENTO MILITAR</strong>
-    </nav>
     <div class="container">
-        <div class="card-noticia" style="max-width: 450px; margin: 40px auto; border-left: none; border-top: 6px solid var(--verde-eb);">
-            <h2 style="text-align: center;">Criar Conta</h2>
+        <div class="card-noticia" style="max-width:400px; margin:auto;">
+            <h2>Alistamento</h2>
             <form action="/cadastro" method="POST">
-                <input type="text" name="discord_user" placeholder="Discord (ex: Shelby#0000)" required>
-                <input type="text" name="setor" placeholder="Seu Setor / Organização" required>
-                <input type="text" name="login" placeholder="Nome de Usuário para Login" required>
-                <input type="password" name="senha" placeholder="Senha de Acesso" required>
-                <button type="submit">FINALIZAR ALISTAMENTO</button>
+                <input type="text" name="discord_user" placeholder="Discord#0000" required>
+                <input type="text" name="setor" placeholder="Setor" required>
+                <input type="text" name="login" placeholder="Nome de Usuário" required>
+                <input type="password" name="senha" placeholder="Senha" required>
+                <button type="submit" style="background:#2e3b23; color:white; width:100%;">CADASTRAR</button>
             </form>
-            <p style="text-align:center; font-size:0.8rem;">Já é membro? <a href="/login" style="color:var(--verde-claro);">Entrar</a></p>
         </div>
     </div>
 </body>
