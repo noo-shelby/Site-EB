@@ -2,19 +2,24 @@
 <html lang="pt-br">
 <head>
     <link rel="stylesheet" href="/style.css">
-    <title>Admin | CComEX</title>
+    <title>Painel Admin</title>
 </head>
 <body>
     <div class="container">
         <h1>Gestão de Membros</h1>
-        <table border="1" width="100%" style="background:white; text-align:center;">
-            <tr>
-                <th>Login</th><th>Setor</th><th>Cargo</th><th>ADVs</th><th>Ações</th>
-            </tr>
-            <% logs.forEach(l => { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Militar</th>
+                    <th>Cargo</th>
+                    <th>ADVs</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% logs.forEach(l => { %>
                 <tr>
                     <td><%= l.login %></td>
-                    <td><%= l.setor %></td>
                     <td>
                         <form action="/admin/alterar-cargo/<%= l.id %>" method="POST">
                             <select name="novo_cargo" onchange="this.form.submit()">
@@ -27,12 +32,16 @@
                     </td>
                     <td><%= l.advs %>/3</td>
                     <td>
-                        <form action="/admin/adv/<%= l.id %>" method="POST">
-                            <button type="submit" style="background:orange;">+1 ADV</button>
+                        <form action="/admin/adv/<%= l.id %>" method="POST" style="display:inline;">
+                            <button type="submit" style="background:orange; color:white;">+1 ADV</button>
+                        </form>
+                        <form action="/admin/banir-direto/<%= l.id %>" method="POST" style="display:inline;">
+                            <button type="submit" style="background:black; color:red;">BANIR</button>
                         </form>
                     </td>
                 </tr>
-            <% }) %>
+                <% }) %>
+            </tbody>
         </table>
         <br><a href="/">Voltar</a>
     </div>
