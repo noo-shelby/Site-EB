@@ -1,10 +1,10 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-// Cria ou abre o arquivo de banco de dados
+// Guarda o ficheiro sqlite no diretório do projeto
 const db = new Database(path.join(__dirname, '../database.db'));
 
-// Cria a tabela de usuários se ela ainda não existir
+// Cria a tabela de utilizadores automaticamente
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
