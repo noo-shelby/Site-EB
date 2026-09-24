@@ -3,16 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Militar - Login</title>
+  <title>Portal Militar - Início</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-card">
+  <!-- Container principal após login -->
+  <div id="mainApp" class="dashboard-container" style="display: none;">
+    <!-- Sidebar / Menu Lateral -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>Portal EB</h3>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" onclick="showSection('homeSection')" class="nav-item">🏠 Início</a>
+        <a href="#" onclick="showSection('profileSection')" class="nav-item">👤 Perfil</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button onclick="logout()" class="btn-logout">Sair</button>
+      </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+      <!-- Seção Início -->
+      <section id="homeSection" class="content-section">
+        <h1 id="welcomeTitle">Bem-vindo, [user]!</h1>
+        <p>Acesse as funcionalidades pelo menu lateral.</p>
+      </section>
+
+      <!-- Seção Perfil -->
+      <section id="profileSection" class="content-section" style="display: none;">
+        <h2>Meu Perfil</h2>
+        <form id="profileForm">
+          <div class="input-group">
+            <label>Nome de Usuário</label>
+            <input type="text" id="profUsername" required>
+          </div>
+          <div class="input-group">
+            <label>E-mail Linkado</label>
+            <input type="email" id="profEmail" disabled>
+          </div>
+          <hr style="border-color: #2a384e; margin: 20px 0;">
+          <h3>Alterar Senha</h3>
+          <div class="input-group">
+            <label>Nova Senha</label>
+            <input type="password" id="profNewPassword" placeholder="Digite para alterar">
+          </div>
+          <button type="submit">Salvar Alterações</button>
+        </form>
+        <div id="profMessage"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Tela de Login Inicial -->
+  <div id="loginScreen" class="login-card">
     <h2>Acesso ao Portal</h2>
     <form id="loginForm">
       <div class="input-group">
-        <label>E-mail</label>
-        <input type="email" id="email" required placeholder="seu@email.com">
+        <label>E-mail / Usuário</label>
+        <input type="text" id="email" required placeholder="seu@email.com">
       </div>
       <div class="input-group">
         <label>Senha</label>
@@ -25,38 +75,85 @@
   </div>
 
   <script>
+    // Inicialização e verificação de login
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('userData') || '{}');
+
+      if (token && user.username) {
+        showDashboard(user);
+      }
+    });
+
+    // Submissão do formulário de Login
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const msgDiv = document.getElementById('message');
+      const userInput = document.getElementById('email').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+
+      // Mecanismo Secreto para Acesso Admin
+      if (userInput === 'administrador painel' && passwordInput === '123456789') {
+        window.location.href = '404.html';
+        return;
+      }
 
       try {
         const res = await fetch('/api/v1/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email: userInput, password: passwordInput })
         });
 
         const data = await res.json();
 
         if (res.ok) {
           localStorage.setItem('token', data.token);
-          msgDiv.innerText = 'Login realizado com sucesso! Redirecionando...';
-          msgDiv.style.color = '#4CAF50';
-          
-          // Se for staff, podemos redirecionar para a área restrita
-          setTimeout(() => {
-            alert(`Bem-vindo, ${data.user.username}!`);
-          }, 1000);
+          localStorage.setItem('userData', JSON.stringify(data.user));
+          showDashboard(data.user);
         } else {
-          msgDiv.innerText = data.error || 'Erro ao fazer login.';
-          msgDiv.style.color = '#f44336';
+          document.getElementById('message').innerText = data.error || 'Erro ao fazer login.';
+          document.getElementById('message').style.color = '#f44336';
         }
       } catch (err) {
-        msgDiv.innerText = 'Erro ao conectar ao servidor.';
-        msgDiv.style.color = '#f44336';
+        document.getElementById('message').innerText = 'Erro ao conectar ao servidor.';
+        document.getElementById('message').style.color = '#f44336';
       }
+    });
+
+    function showDashboard(user) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'flex';
+      document.getElementById('welcomeTitle').innerText = `Bem-vindo, ${user.username}!`;
+      document.getElementById('profUsername').value = user.username || '';
+      document.getElementById('profEmail').value = user.email || '';
+    }
+
+    function showSection(sectionId) {
+      document.getElementById('homeSection').style.display = 'none';
+      document.getElementById('profileSection').style.display = 'none';
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userData');
+      window.location.reload();
+    }
+
+    // Atualização do Perfil
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newUsername = document.getElementById('profUsername').value;
+      const newPassword = document.getElementById('profNewPassword').value;
+      const msgDiv = document.getElementById('profMessage');
+
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      userData.username = newUsername;
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      document.getElementById('welcomeTitle').innerText = `Bem-vindo, ${newUsername}!`;
+      msgDiv.innerText = 'Dados atualizados com sucesso!';
+      msgDiv.style.color = '#4CAF50';
     });
   </script>
 </body>
