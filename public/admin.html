@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo - Staff</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar Admin -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3 style="color: #d9534f;">Painel Staff</h3>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" onclick="showAdminSection('adminHome')" class="nav-item">🏠 Início</a>
+        <a href="#" onclick="showAdminSection('adminProfile')" class="nav-item">👤 Perfil</a>
+        <a href="#" onclick="showAdminSection('adminAnnouncements')" class="nav-item">📢 Comunicados</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button onclick="window.location.href='index.html'" class="btn-logout">Sair</button>
+      </div>
+    </aside>
+
+    <!-- Conteúdo Admin -->
+    <main class="main-content">
+      <!-- Início Admin -->
+      <section id="adminHome" class="content-section">
+        <h1>Bem-vindo, Administrador!</h1>
+        <p>Gerencie avisos e configurações pelo menu lateral.</p>
+      </section>
+
+      <!-- Perfil Admin -->
+      <section id="adminProfile" class="content-section" style="display: none;">
+        <h2>Perfil do Administrador</h2>
+        <form id="adminProfileForm">
+          <div class="input-group">
+            <label>Nome de Usuário</label>
+            <input type="text" id="admUsername" value="Administrador">
+          </div>
+          <div class="input-group">
+            <label>E-mail Linkado</label>
+            <input type="email" value="admin@exercito.br" disabled>
+          </div>
+          <div class="input-group">
+            <label>Nova Senha</label>
+            <input type="password" placeholder="Digite para alterar">
+          </div>
+          <button type="submit" style="background-color: #d9534f;">Salvar</button>
+        </form>
+      </section>
+
+      <!-- Comunicados -->
+      <section id="adminAnnouncements" class="content-section" style="display: none;">
+        <h2>Enviar Comunicado / E-mail</h2>
+        <form id="announcementForm">
+          <div class="input-group">
+            <label>Destinatário</label>
+            <select id="recipientSelect">
+              <option value="all">Todos os Usuários</option>
+              <option value="user1">Recruta_Silva (silva@email.com)</option>
+              <option value="user2">Soldado_Oliveira (oliveira@email.com)</option>
+              <option value="user3">Cabo_Santos (santos@email.com)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Assunto</label>
+            <input type="text" id="emailSubject" required placeholder="Título da mensagem">
+          </div>
+          <div class="input-group">
+            <label>Mensagem</label>
+            <textarea id="emailBody" rows="6" required style="width:100%; background:#0f141c; color:#fff; border:1px solid #2a384e; padding:10px; border-radius:4px;" placeholder="Escreva a mensagem aqui..."></textarea>
+          </div>
+          <button type="submit" style="background-color: #d9534f;">Enviar Comunicado</button>
+        </form>
+        <div id="announcementMessage" style="margin-top: 15px;"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function showAdminSection(sectionId) {
+      document.getElementById('adminHome').style.display = 'none';
+      document.getElementById('adminProfile').style.display = 'none';
+      document.getElementById('adminAnnouncements').style.display = 'none';
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    document.getElementById('announcementForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const recipient = document.getElementById('recipientSelect').value;
+      const msgDiv = document.getElementById('announcementMessage');
+      
+      msgDiv.innerText = `Comunicado enviado com sucesso para: ${recipient === 'all' ? 'Todos os usuários' : recipient}!`;
+      msgDiv.style.color = '#4CAF50';
+      
+      document.getElementById('emailSubject').value = '';
+      document.getElementById('emailBody').value = '';
+    });
+  </script>
+</body>
+</html>
