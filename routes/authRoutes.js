@@ -13,16 +13,13 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Preencha todos os campos.' });
     }
 
-    // Verifica se e-mail já existe no banco
     const userExists = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
     if (userExists) {
       return res.status(400).json({ error: 'E-mail já cadastrado.' });
     }
 
-    // Criptografa a senha
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Insere no banco SQLite
     const insert = db.prepare('INSERT INTO users (username, email, password, is_staff) VALUES (?, ?, ?, 0)');
     insert.run(username, email, hashedPassword);
 
@@ -33,7 +30,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// 2. LOGIN DE MEMBRO
+// 2. LOGIN
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -48,10 +45,9 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Credenciais inválidas.' });
     }
 
-    // Gera o Token JWT
     const token = jwt.sign(
       { id: user.id, username: user.username, is_staff: Boolean(user.is_staff) },
-      process.env.JWT_SECRET || 'secreto_temp',
+      process.env.JWT_SECRET || 'chave_secreta_padrao',
       { expiresIn: '8h' }
     );
 
@@ -64,6 +60,25 @@ router.post('/login', async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: 'Erro ao realizar login.' });
   }
+});
+
+// 3. ROTA SECRETA PARA TORNAR CONTA STAFF (Uso pelo Render)
+router.post('/make-staff', (req, res) => {
+  const { email, secretKey } = req.body;
+
+  // Proteção simples por chave no body
+  if (secretKey !== (process.env.ADMIN_SECRET_KEY || 'minha_chave_master_123')) {
+    return res.status(403).json({ error: 'Chave de acesso inválida.' });
+  }
+
+  const update = db.prepare('UPDATE users SET is_staff = 1 WHERE email = ?');
+  const result = update.run(email);
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'Usuário não encontrado.' });
+  }
+
+  return res.json({ message: `O usuário ${email} agora é STAFF!` });
 });
 
 module.exports = router;
