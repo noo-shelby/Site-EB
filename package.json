@@ -1,10 +1,10 @@
 {
   "name": "discord-rp-manager",
   "version": "1.0.0",
-  "description": "Bot de Gerenciamento e Backend RP Militar",
+  "description": "Backend e API RP Militar",
   "main": "index.js",
   "scripts": {
-    "start": "node deploy-commands.js && node index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -15,6 +15,6 @@
     "jsonwebtoken": "^9.0.2"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "20.x"
   }
 }
