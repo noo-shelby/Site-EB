@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Militar - Cadastro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-card">
+    <h2>Criar Conta</h2>
+    <form id="registerForm">
+      <div class="input-group">
+        <label>Nome / Nickname</label>
+        <input type="text" id="username" required placeholder="Ex: Recruta_Silva">
+      </div>
+      <div class="input-group">
+        <label>E-mail</label>
+        <input type="email" id="email" required placeholder="seu@email.com">
+      </div>
+      <div class="input-group">
+        <label>Senha</label>
+        <input type="password" id="password" required placeholder="••••••••">
+      </div>
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p class="link-text">Já possui conta? <a href="index.html">Fazer Login</a></p>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const msgDiv = document.getElementById('message');
+
+      try {
+        const res = await fetch('/api/v1/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          msgDiv.innerText = 'Conta criada com sucesso! Redirecionando para login...';
+          msgDiv.style.color = '#4CAF50';
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1500);
+        } else {
+          msgDiv.innerText = data.error || 'Erro ao criar conta.';
+          msgDiv.style.color = '#f44336';
+        }
+      } catch (err) {
+        msgDiv.innerText = 'Erro ao conectar ao servidor.';
+        msgDiv.style.color = '#f44336';
+      }
+    });
+  </script>
+</body>
+</html>
